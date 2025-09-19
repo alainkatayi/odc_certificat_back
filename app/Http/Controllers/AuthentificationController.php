@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
+
 class AuthentificationController extends Controller
 {
         //function pour la création d'un utilisateur
@@ -50,6 +51,41 @@ class AuthentificationController extends Controller
         //casd'erreur
         catch(\Exception $exception){
             return response()-> json(['error' => $exception -> getMessage() ]);
+        }
+    }
+
+        //function pour la connexion d'un utilisateur
+    public function login(Request $request){
+
+        $validationData = Validator::make($request ->all(),[
+            'email' => 'required | string |email',
+            'password' => 'required | string'
+        ]);
+
+        if ($validationData -> fails()){
+            return response()-> json($validationData -> errors(), 403);
+        }
+        $credenstials = ['email' => $request -> email, 'password' => $request -> password];
+        
+        try{
+            if(!auth()->attempt($credenstials)){
+                return response() -> json([
+                    'error' => "Email ou Mot de passe  incorrect  "
+                ], 400);
+            }
+
+            $user = User::where('email', $request -> email)->first();
+            $token = $user -> createToken('token') -> plainTextToken;
+            $user['token'] = $token;
+
+            return response() -> json($user);
+        }
+        catch(\Exception $exception){
+            return response()-> json([
+                'error' => [
+                    $exception -> getMessage()
+                ]
+                ], 500);
         }
     }
 }

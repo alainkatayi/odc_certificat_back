@@ -18,3 +18,6 @@ Route::post('/login', [AuthentificationController::class, 'login']);
 //formation
 Route::post('/formations', [FormationController::class, 'store'])->middleware('auth:sanctum');
 
+//certificat
+Route::post('/certificats/{formationId}', [CertificatController::class, 'generateCertificates'])->middleware('auth:sanctum');
+

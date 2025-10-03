@@ -11,6 +11,14 @@ use Illuminate\Support\Facades\Validator;
 
 class FormationController extends Controller
 {
+    public function index()
+    {
+        $formations = Formation::all();
+        return response()->json([
+            "Formation" => $formations
+        ]);
+    }
+
     public function store(Request $request)
     {
         //on verifie que l'utilisateur est authentifie

@@ -1,6 +1,10 @@
 <?php
 
 use App\Http\Controllers\AuthentificationController;
+use App\Http\Controllers\CertificatController;
+use App\Http\Controllers\FormationController;
+use App\Http\Controllers\ParticipantsController;
+use App\Models\Participants;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -10,3 +14,11 @@ Route::get('/user', function (Request $request) {
 
 Route::post('/register', [AuthentificationController::class, 'register']);
 Route::post('/login', [AuthentificationController::class, 'login']);
+
+//formation
+Route::post('/formations', [FormationController::class, 'store'])->middleware('auth:sanctum');
+Route::get('/formations', [FormationController::class, 'index'])->middleware('auth:sanctum');
+
+//certificat
+Route::post('/certificats/{formationId}', [CertificatController::class, 'generateCertificates'])->middleware('auth:sanctum');
+

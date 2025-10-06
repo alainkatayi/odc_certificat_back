@@ -112,4 +112,9 @@ class FormationController extends Controller
             return response()->json(['error' => $exception->getMessage()]);
         }
     }
+
+    public function show($formationId){
+        $formation = Formation::findOrFail($formationId);
+        return response()->json(["Formation"=>$formation]);
+    }
 }

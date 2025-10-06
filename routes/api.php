@@ -24,3 +24,7 @@ Route::get('/formations/{formationId}', [FormationController::class, 'show'])->m
 Route::post('/certificats/{formationId}', [CertificatController::class, 'genererCertificates'])->middleware('auth:sanctum');
 Route::get('/certificats/{formationId}', [CertificatController::class, 'getCertificatsbyFormation'])->middleware('auth:sanctum');
 
+
+//participants
+Route::get('/participants', [ParticipantsController::class, 'index'])->middleware('auth:sanctum');
+Route::get('/participants/{formationId}', [ParticipantsController::class, 'getParticipantsByFormation'])->middleware('auth:sanctum');

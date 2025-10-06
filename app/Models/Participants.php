@@ -20,4 +20,8 @@ class Participants extends Model
         return $this->belongsToMany(Formation::class, 'formation_participant')
             ->withTimestamps();
     }
+    public function certificats()
+    {
+        return $this->hasMany(Certificat::class);
+    }
 }

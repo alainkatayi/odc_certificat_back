@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Auth;
 class CertificatController extends Controller
 {
 
-    public function generateCertificates($formationId)
+    public function genererCertificates($formationId)
     {
         //on verifie que l'utilisateur est authentifie
         $user = Auth::user();
@@ -37,8 +37,8 @@ class CertificatController extends Controller
             Storage::disk('public')->makeDirectory('certificats_generated');
 
             // chemin du template(le model de certificat)
-            $templateRelative = $formation->certificat_file;
-            $templatePath = storage_path('app/public/' . $templateRelative);
+            
+            $templatePath = storage_path('app/public/' . $formation->certificat_file);
 
             //on genere un certificat pour chaque participant
             foreach ($participants as $participant) {
@@ -68,19 +68,33 @@ class CertificatController extends Controller
                 $pdf->Write(0, $formation->name);
 
                 //sauvarder le PDF avec le nom du participant et de la formation
-                $outputPath = storage_path('app/public/certificats_generated/certificat_' . $formation->name . '_' . $participant->name . '.pdf');
-                $pdf->Output('F', $outputPath);
+                 $fileName = 'certificat_' . str_replace(' ', '_', $formation->name) . '_' . str_replace(' ', '_', $participant->first_name . '_' . $participant->name) . '.pdf';
+                
+                $filePath = $fileName;
+
+                Storage::disk('public')->put($filePath, $pdf->Output('S'));
 
                 // Enregistrer le certificat de chaque participant dans la base de données
                 Certificat::create([
-                    'participant_name' => $participant->name,
-                    'participant_email' => $participant->email,
-                    'certificat_file' => 'certificats_generated/' . $outputPath,
+                    'participants_id' => $participant->id,
+                    'formation_id' => $formation->id,
+                    'certificat_path' =>$filePath
                 ]);
             }
             return response()->json(['message' => 'Certificats générés avec succès'], 200);
         } catch (\Exception $e) {
             return response()->json(['message' => 'Erreur lors de la génération des certificats', 'error' => $e->getMessage()], 500);
         }
+    }
+
+    public function getCertificatsbyFormation($formationId){
+        $formation = Formation::find($formationId);
+        if (!$formation) {
+            return response()->json(['message' => "La formation n'existe pas"], 404);
+        }  
+        $certificats = Certificat::where('formation_id', $formationId)
+        //->select('id', 'participants_id', 'certificat_path')
+        ->get();
+        return response()->json($certificats, 200); 
     }
 }

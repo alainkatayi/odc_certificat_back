@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Formation;
+use App\Models\Participants;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,9 +15,9 @@ return new class extends Migration
     {
         Schema::create('certificats', function (Blueprint $table) {
             $table->id();
-            $table->string('participant_name');
-            $table->string('participant_email');
-            $table->string('certificat_file');
+            $table->foreignIdFor(Formation::class)->constrained()->onDelete('cascade');
+            $table->foreignIdFor(Participants::class)->constrained()->onDelete('cascade');
+            $table->string('certificat_path');
             $table->timestamps();
         });
     }

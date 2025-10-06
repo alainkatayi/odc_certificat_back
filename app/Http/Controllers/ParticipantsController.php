@@ -18,4 +18,12 @@ class ParticipantsController extends Controller
         ]);
     }
 
+    public function getParticipantsByFormation($formationId){
+        $formation = Formation::find($formationId);
+        $participants = $formation->participants;
+        return response()->json([
+            "Participants"=> $participants
+        ]);
+    }
+
 }

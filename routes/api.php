@@ -28,3 +28,4 @@ Route::get('/certificats/{formationId}', [CertificatController::class, 'getCerti
 //participants
 Route::get('/participants', [ParticipantsController::class, 'index'])->middleware('auth:sanctum');
 Route::get('/participants/{formationId}', [ParticipantsController::class, 'getParticipantsByFormation'])->middleware('auth:sanctum');
+Route::post('/participants', [ParticipantsController::class, 'store'])->middleware('auth:sanctum');

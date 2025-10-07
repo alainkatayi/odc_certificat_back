@@ -68,7 +68,7 @@ class CertificatController extends Controller
                 $pdf->Write(0, $formation->name);
 
                 //sauvarder le PDF avec le nom du participant et de la formation
-                 $fileName = 'certificat_' . str_replace(' ', '_', $formation->name) . '_' . str_replace(' ', '_', $participant->first_name . '_' . $participant->name) . '.pdf';
+                 $fileName = 'Certificat_' . str_replace(' ', '_', $formation->name) . '_' . str_replace(' ', '_', $participant->first_name . '_' . $participant->name) . '.pdf';
                 
                 $filePath = $fileName;
 

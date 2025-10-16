@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Certificat;
 use App\Http\Requests\StoreCertificatRequest;
 use App\Http\Requests\UpdateCertificatRequest;
+use App\Http\Resources\CertificatResource;
 use App\Models\Formation;
 use setasign\Fpdi\Fpdi;
 use Illuminate\Support\Str;
@@ -100,6 +101,6 @@ class CertificatController extends Controller
 
     public function index(){
         $certificats =  Certificat::paginate(8);
-        return response()->json($certificats,200);
+        return CertificatResource::collection($certificats);
     }
 }

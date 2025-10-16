@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Formation;
 use App\Models\Participants;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Resources\FormationResource;
 
 
 class FormationController extends Controller
@@ -14,7 +15,7 @@ class FormationController extends Controller
     public function index()
     {
         $formations = Formation::paginate(5);
-        return response()->json($formations);
+        return FormationResource::collection($formations);
     }
 
     public function store(Request $request)

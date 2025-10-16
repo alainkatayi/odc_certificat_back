@@ -99,7 +99,7 @@ class CertificatController extends Controller
     }
 
     public function index(){
-        $certificats =  Certificat::all();
+        $certificats =  Certificat::paginate(8);
         return response()->json($certificats,200);
     }
 }

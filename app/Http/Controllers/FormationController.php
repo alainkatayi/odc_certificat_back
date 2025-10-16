@@ -13,10 +13,8 @@ class FormationController extends Controller
 {
     public function index()
     {
-        $formations = Formation::all();
-        return response()->json([
-            "Formation" => $formations
-        ]);
+        $formations = Formation::paginate(5);
+        return response()->json($formations);
     }
 
     public function store(Request $request)

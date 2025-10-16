@@ -97,4 +97,9 @@ class CertificatController extends Controller
         ->get();
         return response()->json($certificats, 200); 
     }
+
+    public function index(){
+        $certificats =  Certificat::paginate(8);
+        return response()->json($certificats,200);
+    }
 }

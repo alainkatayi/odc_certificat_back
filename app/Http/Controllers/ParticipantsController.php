@@ -15,10 +15,8 @@ class ParticipantsController extends Controller
 
     public function index()
     {
-        $participants = Participants::all();
-        return response()->json([
-            "Participants" => $participants
-        ]);
+        $participants = Participants::paginate(5);
+        return response()->json($participants);
     }
 
     public function getParticipantsByFormation($formationId)

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Participants;
 use App\Http\Requests\StoreParticipantsRequest;
 use App\Http\Requests\UpdateParticipantsRequest;
+use App\Http\Resources\ParticipantResource;
 use App\Models\Formation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -16,7 +17,7 @@ class ParticipantsController extends Controller
     public function index()
     {
         $participants = Participants::paginate(5);
-        return response()->json($participants);
+        return ParticipantResource::collection($participants);
     }
 
     public function getParticipantsByFormation($formationId)

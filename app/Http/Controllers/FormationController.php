@@ -116,4 +116,11 @@ class FormationController extends Controller
         $formation = Formation::findOrFail($formationId);
         return response()->json(["Formation"=>$formation]);
     }
+
+    public function destroy(Formation $formationId){
+        $formationId ->delete();
+        return response()->json([
+            "Message" => '[]'
+        ]);
+    }
 }

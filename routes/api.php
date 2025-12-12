@@ -19,6 +19,7 @@ Route::post('/login', [AuthentificationController::class, 'login']);
 Route::post('/formations', [FormationController::class, 'store'])->middleware('auth:sanctum');
 Route::get('/formations', [FormationController::class, 'index'])->middleware('auth:sanctum');
 Route::get('/formations/{formationId}', [FormationController::class, 'show'])->middleware('auth:sanctum');
+Route::delete('/formations/{formationId}', [FormationController::class, 'destroy'])->middleware('auth:sanctum');
 
 //certificat
 Route::post('/certificats/{formationId}', [CertificatController::class, 'genererCertificates'])->middleware('auth:sanctum');
